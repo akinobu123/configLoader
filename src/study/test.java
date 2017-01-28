@@ -69,7 +69,7 @@ public class test {
 			// ファイルパスの合成、コピー実行
 			String filePath = fileDir + fileName;
 			System.out.println(filePath);
-			copyFile(filePath, ".\\img\\" + fileName);
+			copyFile(filePath, String.format(".\\img\\%03d_%s", i, fileName));
 		}
 	}
 	

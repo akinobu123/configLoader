@@ -55,6 +55,7 @@ public class config {
 					fTestDocPath = str;
 				} else if (isTestDocSetPattern) {
 					if (str.equals("##")) {
+						// パターンを1セット追加
 						fTestDocSetKeys.add(key);
 						fTestDocSetPatterns.add(pattern);
 						// パターン用のリストを開放
