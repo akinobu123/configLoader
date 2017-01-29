@@ -12,6 +12,11 @@ public class matrix {
 	}
 	
 	public String get(int index, String key) {
-		return fMatrix.get(index).get(key);
+		if (index >=0 && index < fMatrix.size()) {
+			HashMap<String,String> row = fMatrix.get(index);
+			return row.get(key);
+		} else {
+			return null;
+		}
 	}
 }

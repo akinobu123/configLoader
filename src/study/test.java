@@ -38,10 +38,11 @@ public class test {
 			String str = fConfig.fTestDocSetKeys.get(patternIndex);
 			String[] strList = str.split("#");
 			if(strList.length==3) {
-				String factor = strList[1];
-				String level = strList[2];
+				String patternFactor = strList[1];
+				String patternLevel = strList[2];
 				// もし指定の因子水準が現在のテスト項目と合致するならコピー実行
-				if(fMatrix.get(testItem, factor).equals(level)){
+				String level = fMatrix.get(testItem, patternFactor);
+				if(level != null && level.equals(patternLevel)) {
 					executeCopy(testItem, patternIndex);
 					break;
 				}
@@ -52,10 +53,12 @@ public class test {
 	static void executeCopy(int testItem, int patternIndex) {
 		// テスト文書保管ディレクトリの取り出し
 		String fileDir = fConfig.fTestDocPath;
+		if (fileDir.equals("")) { System.out.println("[testDocPath] is none."); return; }
 		if ( ! fileDir.endsWith("\\")) {
 			fileDir = fileDir + "\\";
 		}
 		// テスト文書セットパターン内のリストでループ
+		if (fConfig.fTestDocSetPatterns.size() <= patternIndex) { return; }
 		List<String> pattern = fConfig.fTestDocSetPatterns.get(patternIndex);
 		for(int i=0; i<pattern.size(); i++) {
 			// ファイル名の取り出し
@@ -64,12 +67,21 @@ public class test {
 			for(int j=0; j<fConfig.fTestDocNameReplaces.size(); j++) {
 				String factor = fConfig.fTestDocNameReplaces.get(j);
 				String level = fMatrix.get(testItem, factor);
+				if (level == null) {
+					System.out.println(
+						String.format("[testDocNameReplace] Factor %s is none.", factor));
+					continue;
+				}
 				fileName = fileName.replace("["+factor+"]", level);
 			}
 			// ファイルパスの合成、コピー実行
 			String filePath = fileDir + fileName;
 			System.out.println(filePath);
-			copyFile(filePath, String.format(".\\img\\%03d_%s", i, fileName));
+			boolean ret = copyFile(filePath, String.format(".\\img\\%03d_%s", i, fileName));
+			if (!ret) {
+				System.out.println(
+					String.format("Test item no.%03d, Copy error : %s", testItem, filePath));
+			}
 		}
 	}
 	

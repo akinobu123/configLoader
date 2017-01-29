@@ -1,3 +1,7 @@
+[testDocNameReplace]
+AAA
+BBB
+
 [testDocPath]
 C:\Users\akinobu\workspace\study\testDoc
 
@@ -14,7 +18,3 @@ ZZZ_[AAA]_[BBB].txt
 ZZZ_[AAA]_[BBB].txt
 XXX_[AAA]_[BBB].txt
 ##
-
-[testDocNameReplace]
-AAA
-BBB
